@@ -1,3 +1,14 @@
+obs = obslua
+ffi = require("ffi")
+
+-- load the shared object (detect_game.so)
+ffi.cdef[[
+    int get_running_game_path(char* buffer, int bufferSize);
+]]
+
+-- load the detect_game.so file (make sure its in the same directory as the lua script or specify the correct path)
+detect_game = ffi.load(script_path() .. "detect_game.so")
+
 -- description in obs
 function script_description()
 	 return [[Saves replays to sub-folders using the current fullscreen/focused video game executable name on Linux.
@@ -11,12 +22,7 @@ end
 
 -- add a callback for frontend events in OBS (when a replay buffer is saved)
 function script_load()
-	-- load the shared object (detect_game.so)
-	ffi.cdef[[
-		int get_running_fullscreen_game_path(char* buffer, int bufferSize)
-	]]
-	detect_game = ffi.load(script_path() .. "detect_game.so")
-	obs.obs_frontend_add_event_callback(obs_frontend_callback)
+    obs.obs_frontend_add_event_callback(obs_frontend_callback)
 end
 
 -- callback to process events triggered by obs
