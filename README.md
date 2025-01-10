@@ -1,3 +1,3 @@
 # obs-replay-folders
 
-Saves replay buffer files to game-specific folders (like ShadowPlay).
+Saves replay buffer files to game-specific folders (like ShadowPlay). Edited for linux computers.
